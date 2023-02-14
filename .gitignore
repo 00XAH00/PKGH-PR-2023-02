@@ -1,3 +1,4 @@
 **/.DS_Store
 **/.idea
 BackEnd/.env
+/frontend/node_modules/
