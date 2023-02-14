@@ -3,18 +3,25 @@ from src.api.base_router import router
 
 tags = [
     {
-        'name': 'categories',
-        'description': 'Запросы для взаимодействия с категориями статей'
+        'name': 'users',
+        'description': 'Запросы для взаимодействия с пользователями сайта'
     },
     {
-        'name': 'articles',
-        'description': 'Запросы для взаимодействия со статьями'
+        'name': 'goods',
+        'description': 'Запросы для взаимодействия с товарами'
+    },
+    {
+        'name': 'reviews',
+        'description': 'Запросы для взаимодействия с отзывами товаров'
+    },
+    {
+        'name': 'cart',
+        'description': 'Запросы для взаимодействия с корзиной пользователя'
     }
 ]
 
 app = FastAPI(
-    title="Example FastApi project",
-    description="Project for learn FastApi And SQLAlchemy",
+    title="FastApi for AppleDevices shop",
     version="0.1.0",
     openapi_tags=tags
 )
