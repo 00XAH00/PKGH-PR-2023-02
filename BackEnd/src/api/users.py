@@ -11,11 +11,17 @@ router = APIRouter(
 
 
 @router.post('/create_user', response_model=UserResponse, name="Тестовый запрос")
-def get(user: UserCreateSchema, user_service: UserService = Depends()):
+def create_user(user: UserCreateSchema, user_service: UserService = Depends()):
     """
-
+        Создание пользователя
     """
-    # user_password_first = user_service.password_hash("test_passwd")
-    #
-    # return user_service.password_check(input_password=user_password, user_password=user_password_first)
     return user_service.create_user(user)
+
+
+# TODO: возвращать объект пользователя и результат его удаления
+@router.delete('/delete_user', response_model=UserResponse, name="Удаление пользователя")
+def remove_user(user_id: int, user_service: UserService = Depends()):
+    """
+        Создание пользователя
+    """
+    return user_service.remove(user_id)
