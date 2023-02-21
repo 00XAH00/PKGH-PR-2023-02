@@ -27,6 +27,23 @@ class UserService:
 
         return user
 
+    def get_user(self, user_id):
+        user = (
+            self.session
+            .query(User)
+            .filter(
+                User.id == user_id
+            )
+            .first()
+        )
+        return user
+
+    def remove(self, user_id: int):
+        user = self.get_user(user_id)
+        self.session.delete(user)
+        self.session.commit()
+        return user
+
     @staticmethod
     def password_hash(password: str) -> UserPassword:
         salt = os.urandom(32)
