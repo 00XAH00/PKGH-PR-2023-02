@@ -7,6 +7,9 @@ class Settings(BaseSettings):
     connection_string: str
     password_hash_algorithm: str
     password_encoding: str
+    jwt_time_expire_seconds: int
+    jwt_secret: str
+    jwt_algorithm: str
 
 
 settings = Settings(
