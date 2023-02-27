@@ -2,7 +2,7 @@ import hashlib
 import os
 from datetime import datetime, timedelta
 from fastapi import HTTPException
-from typing import Optional
+from typing import Optional, Union
 from fastapi import Depends
 from starlette import status
 from src.core.settings import settings
@@ -13,13 +13,18 @@ from src.models.user_password import UserPassword
 from src.models.user import User
 from jose import jwt, JWTError
 
+from src.services.exception import ExceptionService
+
 
 class UserService:
-    def __init__(self, session: Session = Depends(get_session)):
+    def __init__(self, session: Session = Depends(get_session), exception_service: ExceptionService = Depends()):
         self.session = session
+        self.exceptions = exception_service
 
     def create_user(self, user_create: UserCreateSchema) -> User:
         password = self.password_hash(user_create.password)
+        if self.user_having(email=user_create.email, phone=user_create.phone):
+            self.exceptions.already_exist("user")
         user = User(
             user_password=password,
             first_name=user_create.first_name,
@@ -33,7 +38,7 @@ class UserService:
 
         return user
 
-    def get_user(self, user_id: int):
+    def get_user_by_id(self, user_id: int) -> Union[User, None]:
         user = (
             self.session
             .query(User)
@@ -44,7 +49,7 @@ class UserService:
         )
         return user
 
-    def get_user_by_phone(self, user_phone: str):
+    def get_user_by_phone(self, user_phone: str) -> Union[User, None]:
         user = (
             self.session
             .query(User)
@@ -55,13 +60,23 @@ class UserService:
         )
         return user
 
-    def remove(self, user_id: int):
-        user = self.get_user(user_id)
-        self.session.delete(user)
-        self.session.commit()
+    def get_user_by_email(self, email: str) -> Union[User, None]:
+        user = (
+            self.session.query(User)
+            .filter(User.email == email)
+            .first()
+        )
         return user
 
-    def authorize(self, phone: str, password: str):
+    def user_having(self, email: str, phone: str) -> bool:
+        return bool(self.get_user_by_email(email) or self.get_user_by_phone(phone))
+
+    def remove(self, user_id: int) -> None:
+        user = self.get_user_by_id(user_id)
+        self.session.delete(user)
+        self.session.commit()
+
+    def authorize(self, phone: str, password: str) -> Union[JWT, None]:
         user = self.get_user_by_phone(phone)
 
         if not user:
@@ -70,6 +85,9 @@ class UserService:
             return None
 
         return self.create_token(user_id=user.id)
+
+    def validate_user_action(self, main_user_id, changeable_user_id) -> bool:
+        return self.get_user_by_id(user_id=main_user_id).is_admin or (main_user_id == changeable_user_id)
 
     @staticmethod
     def password_hash(password: str) -> UserPassword:
