@@ -5,7 +5,14 @@ const Cart: FC = () => {
 
     return(
         <div className={styles['wrapper-cart']}>
-            Cart
+            <div className={styles.heading}>
+                <span className={styles.badge}>1</span>
+                <span className={styles.text}>Cart</span>
+            </div>
+
+            <div className={styles.cart}>
+
+            </div>
         </div>
     )
 }
