@@ -9,7 +9,7 @@ class CategoryService:
         self.session = session
         self.exception = exception
 
-    def add_category(self, category_name: str):
+    def add_category(self, category_name: str) -> Category:
         category_name = category_name.lower()
         if category_name != "iphone":
             category_name = category_name[0].upper() + category_name[1::].lower()
@@ -23,7 +23,12 @@ class CategoryService:
         self.session.commit()
         return category
 
-    def get_category_by_name(self, category_name: str):
+    def get_category_by_name(self, category_name: str) -> Category:
+        category_name = category_name.lower()
+        if category_name != "iphone":
+            category_name = category_name[0].upper() + category_name[1::].lower()
+        else:
+            category_name = "iPhone"
         category = (
             self.session.query(Category)
             .filter(Category.name == category_name)
@@ -32,12 +37,7 @@ class CategoryService:
 
         return category
 
-    def remove_category(self, category_name: str):
-        category_name = category_name.lower()
-        if category_name != "iphone":
-            category_name = category_name[0].upper() + category_name[1::].lower()
-        else:
-            category_name = "iPhone"
+    def remove_category(self, category_name: str) -> None:
         category = self.get_category_by_name(category_name)
         if not category:
             self.exception.not_exist_error("category")
