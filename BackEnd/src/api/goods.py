@@ -26,3 +26,11 @@ def create_product(product: ProductCreateSchema, product_service: ProductService
         Добавление товара
     """
     return product_service.create_product(product)
+
+
+@router.delete('/remove_product', name="Удаление товара", status_code=status.HTTP_204_NO_CONTENT)
+def remove_product(product_code: str, product_service: ProductService = Depends()):
+    """
+        Удаление товара
+    """
+    return product_service.remove_product(product_code)
