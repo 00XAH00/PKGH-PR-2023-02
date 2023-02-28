@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordBearer
 from starlette import status
+from src.models.schemas.product_change_price import ProductChangePriceSchema
 from src.models.schemas.product_create import ProductCreateSchema
 from src.models.schemas.product_response import ProductResponse
 from src.services.goods import ProductService
@@ -34,3 +35,11 @@ def remove_product(product_code: str, product_service: ProductService = Depends(
         Удаление товара
     """
     return product_service.remove_product(product_code)
+
+
+@router.put('/change_product_price', name="Изменение цены товара")
+def remove_product(product_price: ProductChangePriceSchema, product_service: ProductService = Depends()):
+    """
+        Изменение цены товара
+    """
+    return product_service.change_product_price(product_price)
