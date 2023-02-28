@@ -3,6 +3,7 @@ from typing import Optional, Union
 from fastapi import Depends
 from src.db.db import Session, get_session
 from src.models.goods import Product
+from src.models.schemas.product_change_price import ProductChangePriceSchema
 from src.models.schemas.product_create import ProductCreateSchema
 from src.services.categories import CategoryService
 from src.services.exception import ExceptionService
@@ -71,3 +72,11 @@ class ProductService:
         )
 
         return product
+
+    def change_product_price(self, product_new_data: ProductChangePriceSchema):
+        product = self.get_product_by_code(product_new_data.product_code)
+        if not product:
+            self.exceptions.not_exist_error("goods")
+
+        product.price = product_new_data.new_price
+        self.session.commit()
