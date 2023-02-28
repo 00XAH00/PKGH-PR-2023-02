@@ -23,3 +23,8 @@ class ExceptionService:
             error_details = "Данный товар уже существует"
 
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=error_details)
+
+    @staticmethod
+    def token_error():
+        error_details = "Некорректный токен"
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=error_details)

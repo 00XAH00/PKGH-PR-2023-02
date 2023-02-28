@@ -1,10 +1,8 @@
 import hashlib
 import os
 from datetime import datetime, timedelta
-from fastapi import HTTPException
 from typing import Optional, Union
 from fastapi import Depends
-from starlette import status
 from src.core.settings import settings
 from src.db.db import Session, get_session
 from src.models.schemas.jwt import JWT
@@ -151,11 +149,9 @@ class UserService:
         token = jwt.encode(payload, settings.jwt_secret, algorithm=settings.jwt_algorithm)
         return JWT(access_token=token)
 
-    @staticmethod
-    def verify_token(token: str) -> Optional[int]:
+    def verify_token(self, token: str) -> Optional[int]:
         try:
             payload = jwt.decode(token, settings.jwt_secret, algorithms=[settings.jwt_algorithm])
+            return int(payload.get('sub'))
         except JWTError:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Некорректный токен")
-
-        return int(payload.get('sub'))
+            self.exceptions.token_error()
