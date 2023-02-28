@@ -7,7 +7,7 @@ class Product(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     price = Column(Integer, nullable=False)
-    code = Column(String(length=15), unique=True, nullable=False),
+    code = Column(String(length=15), unique=True, nullable=False)
     category_id = Column(Integer, ForeignKey('categories.id'), nullable=False)
     manufacture_id = Column(Integer, ForeignKey('manufactures.id'), nullable=False)
     description = Column(JSON)
