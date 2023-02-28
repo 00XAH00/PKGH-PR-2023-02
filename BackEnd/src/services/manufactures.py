@@ -9,7 +9,7 @@ class ManufactureService:
         self.session = session
         self.exception = exception
 
-    def add_manufacture(self, manufacture_name: str):
+    def add_manufacture(self, manufacture_name: str) -> Manufacture:
         manufacture_name = manufacture_name[0].upper() + manufacture_name[1::].lower()
         if self.get_manufacture_by_name(manufacture_name):
             self.exception.already_exist("manufacture")
@@ -19,7 +19,8 @@ class ManufactureService:
         self.session.commit()
         return manufacture
 
-    def get_manufacture_by_name(self, manufacture_name: str):
+    def get_manufacture_by_name(self, manufacture_name: str) -> Manufacture:
+        manufacture_name = manufacture_name[0].upper() + manufacture_name[1::].lower()
         manufacture = (
             self.session.query(Manufacture)
             .filter(Manufacture.name == manufacture_name)
@@ -28,8 +29,7 @@ class ManufactureService:
 
         return manufacture
 
-    def remove_manufacture(self, manufacture_name: str):
-        manufacture_name = manufacture_name[0].upper() + manufacture_name[1::].lower()
+    def remove_manufacture(self, manufacture_name: str) -> None:
         manufacture = self.get_manufacture_by_name(manufacture_name)
         if not manufacture:
             self.exception.not_exist_error("manufacture")
