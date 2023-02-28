@@ -5,8 +5,9 @@ from src.models.base import Base
 class Product(Base):
     __tablename__ = "goods"
     id = Column(Integer, primary_key=True)
-    name = Column(String, unique=True)
+    manufacture_name = Column(String)
+    name = Column(String)
     price = Column(Integer)
-    code = Column(String(length=15))
+    code = Column(String(length=15), unique=True)
     description = Column(JSON)
     is_available = Column(Boolean)
