@@ -1,5 +1,5 @@
 import {FC} from "react";
-import styles from './Cart.module.scss'
+import styles from '../Cart.module.scss'
 // import {ICartItem} from "../../../../types/cart.interface";
 import { ICartItem } from "../../../../types/cart.interface";
 
