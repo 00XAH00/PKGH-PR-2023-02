@@ -15,7 +15,7 @@ router = APIRouter(
 oauth2_schema = OAuth2PasswordBearer(tokenUrl='/users/authorize')
 
 
-def get_current_user_id(token: JWT = Depends(oauth2_schema)) -> int:
+def get_current_user_id(token: str = Depends(oauth2_schema)) -> int:
     return UserService.verify_token(token)
 
 
@@ -27,12 +27,13 @@ def create_user(user: UserCreateSchema, user_service: UserService = Depends()):
     return user_service.create_user(user)
 
 
-@router.delete('/delete_user', response_model=UserResponse, name="Удаление пользователя", status_code=status.HTTP_204_NO_CONTENT)
-def remove_user(remove_user_id: int, user_service: UserService = Depends(), main_user_id: int = Depends(get_current_user_id)):
+@router.delete('/delete_user', name="Удаление пользователя", status_code=status.HTTP_204_NO_CONTENT)
+def remove_user(remove_user_id: int, user_service: UserService = Depends(),
+                main_user_id: int = Depends(get_current_user_id)):
     """
         Удаление пользователя
     """
-    return user_service.remove(remove_user_id)
+    return user_service.remove(removable_user_id=remove_user_id, main_user_id=main_user_id)
 
 
 @router.put('/change_user_password')
@@ -48,4 +49,4 @@ def user_authorize(auth_schema: OAuth2PasswordRequestForm = Depends(), user_serv
 
 @router.get('/get_me', response_model=UserResponse, name="Получить пользователя")
 def get_me(user_service: UserService = Depends(), user_id: int = Depends(get_current_user_id)):
-    print(user_id)
+    return user_service.get_user_by_id(user_id)

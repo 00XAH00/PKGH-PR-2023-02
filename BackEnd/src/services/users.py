@@ -71,8 +71,10 @@ class UserService:
     def user_having(self, email: str, phone: str) -> bool:
         return bool(self.get_user_by_email(email) or self.get_user_by_phone(phone))
 
-    def remove(self, user_id: int) -> None:
-        user = self.get_user_by_id(user_id)
+    def remove(self, removable_user_id: int, main_user_id: int) -> None:
+        if not self.validate_user_action(main_user_id=main_user_id, changeable_user_id=removable_user_id):
+            self.exceptions.forbidden_error()
+        user = self.get_user_by_id(removable_user_id)
         self.session.delete(user)
         self.session.commit()
 
@@ -86,7 +88,7 @@ class UserService:
 
         return self.create_token(user_id=user.id)
 
-    def validate_user_action(self, main_user_id, changeable_user_id) -> bool:
+    def validate_user_action(self, main_user_id: int, changeable_user_id: int) -> bool:
         return self.get_user_by_id(user_id=main_user_id).is_admin or (main_user_id == changeable_user_id)
 
     @staticmethod
@@ -123,10 +125,10 @@ class UserService:
         return JWT(access_token=token)
 
     @staticmethod
-    def verify_token(token: JWT) -> Optional[int]:
+    def verify_token(token: str) -> Optional[int]:
         try:
-            payload = jwt.decode(token.access_token, settings.jwt_secret, algorithms=[settings.jwt_algorithm])
+            payload = jwt.decode(token, settings.jwt_secret, algorithms=[settings.jwt_algorithm])
         except JWTError:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Некорректный токен")
 
-        return payload.get('sub')
+        return int(payload.get('sub'))
