@@ -81,9 +81,9 @@ class UserService:
         user = self.get_user_by_phone(phone)
 
         if not user:
-            return None
+            self.exceptions.not_exist_error("user")
         if not self.password_check(input_password=password, user_password=user.get_user_password()):
-            return None
+            self.exceptions.password_error()
 
         return self.create_token(user_id=user.id)
 
@@ -115,6 +115,11 @@ class UserService:
         user.salt = user_new_password.salt
 
         self.session.commit()
+
+    def is_user_admin(self, user_id: int) -> bool:
+        user = self.get_user_by_id(user_id)
+
+        return user.is_admin
 
     @staticmethod
     def password_hash(password: str) -> UserPassword:

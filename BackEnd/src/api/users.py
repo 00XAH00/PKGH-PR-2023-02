@@ -17,8 +17,8 @@ router = APIRouter(
 oauth2_schema = OAuth2PasswordBearer(tokenUrl='/users/authorize')
 
 
-def get_current_user_id(token: str = Depends(oauth2_schema)) -> int:
-    return UserService.verify_token(token)
+def get_current_user_id(token: str = Depends(oauth2_schema), user_service: UserService = Depends()) -> int:
+    return user_service.verify_token(token)
 
 
 @router.post('/create_user', response_model=UserResponse, name="Добавление пользователя",
