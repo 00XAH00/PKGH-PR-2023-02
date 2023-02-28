@@ -9,6 +9,7 @@ from src.core.settings import settings
 from src.db.db import Session, get_session
 from src.models.schemas.jwt import JWT
 from src.models.schemas.user_create import UserCreateSchema
+from src.models.schemas.user_password_change import UserPasswordChangeSchema
 from src.models.user_password import UserPassword
 from src.models.user import User
 from jose import jwt, JWTError
@@ -90,6 +91,32 @@ class UserService:
 
     def validate_user_action(self, main_user_id: int, changeable_user_id: int) -> bool:
         return self.get_user_by_id(user_id=main_user_id).is_admin or (main_user_id == changeable_user_id)
+
+    def change_user_password(self, main_user_id: int, changeable_user_password: UserPasswordChangeSchema):
+        main_user = self.get_user_by_id(main_user_id)
+        user = self.get_user_by_id(changeable_user_password.user_id)
+        user_old_password: UserPassword = UserPassword(
+            user.password,
+            user.salt
+        )
+
+        user_have_permissions: bool = self.validate_user_action(
+            main_user_id=main_user_id,
+            changeable_user_id=changeable_user_password.user_id
+        )
+        if not user_have_permissions:
+            self.exceptions.forbidden_error()
+
+        is_password_matches: bool = self.password_check(changeable_user_password.old_password, user_old_password)
+        # Если пользователь администратор и изменяется пароль другой учетной записи, то сверка пароля не производится
+        if not (is_password_matches or (main_user.is_admin and (main_user_id != changeable_user_password.user_id))):
+            self.exceptions.password_error()
+
+        user_new_password = self.password_hash(changeable_user_password.new_password)
+        user.password = user_new_password.password
+        user.salt = user_new_password.salt
+
+        self.session.commit()
 
     @staticmethod
     def password_hash(password: str) -> UserPassword:

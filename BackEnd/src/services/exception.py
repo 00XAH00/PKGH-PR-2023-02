@@ -10,6 +10,11 @@ class ExceptionService:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=error_details)
 
     @staticmethod
+    def password_error() -> None:
+        error_details = "Не правильный пароль"
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=error_details)
+
+    @staticmethod
     def already_exist(exception_block_error: str) -> None:
         error_details = "Информация не доступна"
         if exception_block_error == "user":
