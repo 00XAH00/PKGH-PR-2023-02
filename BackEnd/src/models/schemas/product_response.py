@@ -3,7 +3,8 @@ from pydantic import BaseModel
 
 class ProductResponse(BaseModel):
     id: int
-    manufacture_name: str
+    manufacture_id: int
+    category_id: int
     name: str
     price: int
     code: str
