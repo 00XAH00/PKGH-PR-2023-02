@@ -1,4 +1,3 @@
-import pprint
 from fastapi import Depends
 from src.db.db import Session, get_session
 from src.models.goods import Product
@@ -37,7 +36,6 @@ class ProductService:
             "category_id": category_id,
             "manufacture_id": manufacture_id
         })
-        pprint.pprint(product_create_dict)
 
         product = Product(**product_create_dict)
 
