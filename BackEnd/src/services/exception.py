@@ -40,7 +40,7 @@ class ExceptionService:
         if exception_block_error == "goods":
             error_details = "Данный товар не существует"
         if exception_block_error == "cart_object":
-            error_details = "Данный товар не существует"
+            error_details = "Данный номер не соответствует ни одному из элементов корзины"
 
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=error_details)
 
