@@ -6,17 +6,19 @@ from src.models.schemas.cart_object_create import CartObjectCreateSchema
 from src.models.schemas.cart_object_update import CartObjectUpdate
 from src.services.categories import CategoryService
 from src.services.exception import ExceptionService
+from src.services.goods import ProductService
 from src.services.manufactures import ManufactureService
 
 
 class CartObjectService:
     def __init__(self, session: Session = Depends(get_session), exception_service: ExceptionService = Depends(),
-                 manufacture_service: ManufactureService = Depends(),
-                 category_service: CategoryService = Depends()):
+                 manufacture_service: ManufactureService = Depends(), category_service: CategoryService = Depends(),
+                 product_service: ProductService = Depends()):
         self.session = session
         self.manufacture = manufacture_service
         self.category = category_service
         self.exceptions = exception_service
+        self.products = product_service
 
     def create_cart_object(self, cart_object_new: CartObjectCreateSchema, user_id: int) -> Cart:
         cart_object = self.get_cart_object_by_product_id_and_user_id(
@@ -24,6 +26,9 @@ class CartObjectService:
             user_id=user_id
         )
         if not cart_object:
+            if not self.products.get_product_by_id(cart_object_new.product_id):
+                self.exceptions.not_exist_error("goods")
+
             cart_object = Cart(**cart_object_new.dict(), user_id=user_id)
 
             self.session.add(cart_object)

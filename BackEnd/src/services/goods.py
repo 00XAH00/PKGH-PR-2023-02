@@ -80,3 +80,12 @@ class ProductService:
         product.price = product_new_data.new_price
         self.session.commit()
         return product
+
+    def get_product_by_id(self, product_id: int) -> Union[Product, None]:
+        product = (
+            self.session.query(Product)
+            .filter(Product.id == product_id)
+            .first()
+        )
+
+        return product
