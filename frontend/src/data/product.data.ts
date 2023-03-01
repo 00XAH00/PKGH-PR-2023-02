@@ -13,7 +13,6 @@ export const products: IProduct[] = [
         ],
         price: 3500,
         reviews: []
-
     },
     {
         id: 2,

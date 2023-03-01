@@ -20,12 +20,11 @@ const Cart: FC = () => {
                     isOpen={isOpen}
                     placement='right'
                     onClose={() => setIsOpen(false)}
-                    finalFocusRef={btnRef}
                 >
                     <DrawerOverlay />
                     <DrawerContent>
                         <DrawerCloseButton />
-                        <DrawerHeader>My Cart</DrawerHeader>
+                        <DrawerHeader className={styles.headerCart}>Cart</DrawerHeader>
 
                         <DrawerBody>
                             <div className={styles.cart}>
@@ -35,7 +34,11 @@ const Cart: FC = () => {
                             </div>
                         </DrawerBody>
 
-                        <DrawerFooter>
+                        <DrawerFooter justifyContent='space-between'>
+                                <div className={styles.footer}>
+                                    <div>Total price:</div>
+                                    <div>$2000</div>
+                                </div>
                             <Button colorScheme='pink'>Checkout</Button>
                         </DrawerFooter>
                     </DrawerContent>

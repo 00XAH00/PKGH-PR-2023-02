@@ -1,5 +1,4 @@
 .wrapper-cart{
-  @apply relative;
   .heading{
     @apply flex items-center;
 
@@ -11,19 +10,31 @@
     }
 
   }
+}
+.cart{
 
-  .cart{
-    @apply p-5;
+  .item{
+    @apply mb-4 flex gap-5;
+  }
+  .name{
+    @apply tracking-widest truncate font-semibold w-40 whitespace-pre-wrap;
+  }
+  .price{
+    @apply mt-2 text-gray-400;
+  }
+}
 
-    .item{
+.headerCart{
+  @apply flex justify-center
+}
+.cartImg{ width: 100px; }
 
-    }
-    .name{
-
-    }
-    .price{
-
-    }
+.footer{
+  >div:first-child{
+    @apply text-sm text-gray-400
+  }
+  >div:last-child{
+    @apply text-lg font-semibold
   }
 }
 
