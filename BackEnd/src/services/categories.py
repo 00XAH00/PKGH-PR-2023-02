@@ -1,5 +1,4 @@
 from typing import Union
-
 from fastapi import Depends
 from src.db.db import Session, get_session
 from src.models.categories import Category

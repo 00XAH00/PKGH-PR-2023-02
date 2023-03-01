@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordBearer
 from starlette import status
@@ -68,6 +70,19 @@ def get_product(product_code: str, product_service: ProductService = Depends(),
         Получение товара
     """
     product = product_service.get_product_by_code(product_code)
+    if not product:
+        exception_service.not_exist_error("goods")
+
+    return product
+
+
+@router.get('/get_product_by_category', name="Получение товаров", response_model=List[ProductResponse])
+def get_product_by_category(category_name: str, product_service: ProductService = Depends(),
+                            exception_service: ExceptionService = Depends()):
+    """
+        Получение товаров
+    """
+    product = product_service.get_products_by_category(category_name)
     if not product:
         exception_service.not_exist_error("goods")
 

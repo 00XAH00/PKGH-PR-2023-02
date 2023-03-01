@@ -1,5 +1,4 @@
-from typing import Union
-
+from typing import Union, List
 from fastapi import Depends
 from src.db.db import Session, get_session
 from src.models.goods import Product
@@ -89,3 +88,17 @@ class ProductService:
         )
 
         return product
+
+    def get_products_by_category(self, category_name: str) -> List[Product]:
+        category = self.category.get_category_by_name(category_name)
+
+        if not category:
+            self.exceptions.not_exist_error("category")
+
+        products = (
+            self.session.query(Product)
+            .filter(Product.category_id == category.id)
+            .all()
+        )
+
+        return products
