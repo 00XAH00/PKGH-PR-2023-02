@@ -5,9 +5,7 @@ from src.models.schemas.jwt import JWT
 from src.models.schemas.user_create import UserCreateSchema
 from src.models.schemas.user_password_change import UserPasswordChangeSchema
 from src.models.schemas.user_response import UserResponse
-from src.services.exception import ExceptionService
 from src.services.users import UserService
-
 
 router = APIRouter(
     prefix='/users',

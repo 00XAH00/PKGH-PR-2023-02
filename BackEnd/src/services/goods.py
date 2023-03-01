@@ -1,5 +1,4 @@
 import pprint
-from typing import Optional, Union
 from fastapi import Depends
 from src.db.db import Session, get_session
 from src.models.goods import Product
