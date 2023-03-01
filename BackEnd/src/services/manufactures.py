@@ -1,3 +1,5 @@
+from typing import Union
+
 from fastapi import Depends
 from src.db.db import Session, get_session
 from src.models.manufactures import Manufacture
@@ -19,7 +21,7 @@ class ManufactureService:
         self.session.commit()
         return manufacture
 
-    def get_manufacture_by_name(self, manufacture_name: str) -> Manufacture:
+    def get_manufacture_by_name(self, manufacture_name: str) -> Union[Manufacture, None]:
         manufacture_name = manufacture_name[0].upper() + manufacture_name[1::].lower()
         manufacture = (
             self.session.query(Manufacture)

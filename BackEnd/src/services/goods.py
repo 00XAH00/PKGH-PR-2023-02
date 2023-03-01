@@ -1,3 +1,5 @@
+from typing import Union
+
 from fastapi import Depends
 from src.db.db import Session, get_session
 from src.models.goods import Product
@@ -52,7 +54,7 @@ class ProductService:
         self.session.delete(product)
         self.session.commit()
 
-    def get_product_by_name(self, product_name: str) -> Product:
+    def get_product_by_name(self, product_name: str) -> Union[Product, None]:
         product = (
             self.session.query(Product)
             .filter(Product.name == product_name)
@@ -61,7 +63,7 @@ class ProductService:
 
         return product
 
-    def get_product_by_code(self, product_code: str) -> Product:
+    def get_product_by_code(self, product_code: str) -> Union[Product, None]:
         product = (
             self.session.query(Product)
             .filter(Product.code == product_code)

@@ -1,3 +1,5 @@
+from typing import Union
+
 from fastapi import Depends
 from src.db.db import Session, get_session
 from src.models.categories import Category
@@ -23,7 +25,7 @@ class CategoryService:
         self.session.commit()
         return category
 
-    def get_category_by_name(self, category_name: str) -> Category:
+    def get_category_by_name(self, category_name: str) -> Union[Category, None]:
         category_name = category_name.lower()
         if category_name != "iphone":
             category_name = category_name[0].upper() + category_name[1::].lower()
