@@ -11,7 +11,7 @@ current_dir = str(Path(os.getcwd()).parent)
 if current_dir not in sys.path:
     sys.path.append(current_dir)
 
-from src.models import base, user, goods, review, cart, manufactures, categories
+from src.models import base, user, goods, review, cart, manufactures, categories, pictures
 
 config = context.config
 
