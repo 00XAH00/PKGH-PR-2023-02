@@ -16,3 +16,4 @@ class Product(Base):
     manufacture = relationship('Manufacture', backref='manufactures')
     is_available = Column(Boolean, nullable=False)
     description = Column(String, nullable=False)
+    pictures = relationship("Picture", back_populates="product")
