@@ -7,5 +7,5 @@ class ProductCreateSchema(BaseModel):
     name: str
     price: int
     code: str
-    description: dict
+    description: str
     is_available: bool

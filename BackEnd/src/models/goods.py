@@ -1,4 +1,6 @@
-from sqlalchemy import Column, Integer, String, Boolean, JSON, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy.orm import relationship
+
 from src.models.base import Base
 
 
@@ -9,6 +11,8 @@ class Product(Base):
     price = Column(Integer, nullable=False)
     code = Column(String(length=15), unique=True, nullable=False)
     category_id = Column(Integer, ForeignKey('categories.id'), nullable=False)
+    category = relationship('Category', backref='categories')
     manufacture_id = Column(Integer, ForeignKey('manufactures.id'), nullable=False)
-    description = Column(JSON)
+    manufacture = relationship('Manufacture', backref='manufactures')
+    description = Column(String)
     is_available = Column(Boolean, nullable=False)
