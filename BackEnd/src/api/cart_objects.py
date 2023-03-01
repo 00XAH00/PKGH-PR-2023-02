@@ -30,8 +30,6 @@ def create_cart_object(cart_object: CartObjectCreateSchema, cart_object_service:
     """
         Добавление товара в корзину
     """
-    if not user_service.is_user_admin(user_id):
-        exception_service.forbidden_error()
 
     return cart_object_service.create_cart_object(cart_object, user_id)
 
@@ -43,8 +41,6 @@ def remove_cart_object(cart_object_id: int, cart_object_service: CartObjectServi
     """
         Удаление товара из корзины
     """
-    if not user_service.is_user_admin(user_id):
-        exception_service.forbidden_error()
 
     return cart_object_service.remove_cart_object(cart_object_id)
 
@@ -55,8 +51,6 @@ def get_user_cart(cart_object_service: CartObjectService = Depends(), user_servi
     """
         Получение корзины пользователя
     """
-    if not user_service.is_user_admin(user_id):
-        exception_service.forbidden_error()
 
     return cart_object_service.get_cart_objects_by_user_id(user_id)
 
@@ -69,7 +63,5 @@ def change_cart_object_data(cart_object_new_data: CartObjectUpdate, user_id: int
     """
         Обновление данных товара в корзине пользователя
     """
-    if not user_service.is_user_admin(user_id):
-        exception_service.forbidden_error()
 
     return cart_object_service.update_cart_object(cart_object_new_data)
