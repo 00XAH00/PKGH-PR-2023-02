@@ -59,3 +59,16 @@ def change_product_price(product_price: ProductChangePriceSchema, product_servic
         exception_service.forbidden_error()
 
     return product_service.change_product_price(product_price)
+
+
+@router.get('/get_product', name="Получение товара", response_model=ProductResponse)
+def get_product(product_code: str, product_service: ProductService = Depends(),
+                exception_service: ExceptionService = Depends()):
+    """
+        Получение товара
+    """
+    product = product_service.get_product_by_code(product_code)
+    if not product:
+        exception_service.not_exist_error("goods")
+
+    return product
