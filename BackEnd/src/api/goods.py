@@ -38,8 +38,7 @@ def create_product(product: ProductCreateSchema, product_service: ProductService
 @router.delete('/remove_product', name="Удаление товара", status_code=status.HTTP_204_NO_CONTENT)
 def remove_product(product_code: str, product_service: ProductService = Depends(),
                    user_service: UserService = Depends(), user_id: int = Depends(get_current_user_id),
-                   exception_service: ExceptionService = Depends()
-                   ):
+                   exception_service: ExceptionService = Depends()):
     """
         Удаление товара
     """
@@ -51,9 +50,8 @@ def remove_product(product_code: str, product_service: ProductService = Depends(
 
 @router.put('/change_product_price', name="Изменение цены товара", response_model=ProductResponse)
 def change_product_price(product_price: ProductChangePriceSchema, product_service: ProductService = Depends(),
-                   user_service: UserService = Depends(), user_id: int = Depends(get_current_user_id),
-                   exception_service: ExceptionService = Depends()
-                   ):
+                         user_service: UserService = Depends(), user_id: int = Depends(get_current_user_id),
+                         exception_service: ExceptionService = Depends()):
     """
         Изменение цены товара
     """
