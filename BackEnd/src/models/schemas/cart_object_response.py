@@ -1,11 +1,11 @@
 from pydantic import BaseModel
+from src.models.schemas.product_response import ProductResponse
 
 
 class CartObjectResponse(BaseModel):
     id: int
     count: int
-    user_id: int
-    product_id: int
+    product: ProductResponse
 
     class Config:
         orm_mode = True
