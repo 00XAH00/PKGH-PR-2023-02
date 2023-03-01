@@ -18,11 +18,16 @@ class CartObjectService:
         self.category = category_service
         self.exceptions = exception_service
 
-    def create_cart_object(self, cart_object_new: CartObjectCreateSchema) -> Cart:
-        cart_object = Cart(**cart_object_new.dict())
+    def create_cart_object(self, cart_object_new: CartObjectCreateSchema, user_id: int) -> Cart:
+        cart_object = self.get_cart_object_by_product_id_and_user_id(
+            product_id=cart_object_new.product_id,
+            user_id=user_id
+        )
+        if not cart_object:
+            cart_object = Cart(**cart_object_new.dict(), user_id=user_id)
 
-        self.session.add(cart_object)
-        self.session.commit()
+            self.session.add(cart_object)
+            self.session.commit()
 
         return cart_object
 
@@ -62,4 +67,16 @@ class CartObjectService:
         cart_object.count = cart_object_new_data.count
 
         self.session.commit()
+        return cart_object
+
+    def get_cart_object_by_product_id_and_user_id(self, product_id: int, user_id: int) -> Union[Cart, None]:
+        cart_object = (
+            self.session.query(Cart)
+            .filter(
+                Cart.product_id == product_id,
+                Cart.user_id == user_id
+            )
+            .first()
+        )
+
         return cart_object

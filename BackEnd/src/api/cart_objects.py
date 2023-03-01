@@ -33,7 +33,7 @@ def create_cart_object(cart_object: CartObjectCreateSchema, cart_object_service:
     if not user_service.is_user_admin(user_id):
         exception_service.forbidden_error()
 
-    return cart_object_service.create_cart_object(cart_object)
+    return cart_object_service.create_cart_object(cart_object, user_id)
 
 
 @router.delete('/remove_cart_object', name="Удаление товара из корзины", status_code=status.HTTP_204_NO_CONTENT)
