@@ -54,8 +54,10 @@ class CartObjectService:
 
         return user_cart_objects
 
-    def remove_cart_object(self, cart_object_id: int) -> None:
+    def remove_cart_object(self, cart_object_id: int, user_id: int) -> None:
         cart_object = self.get_cart_object_by_id(cart_object_id)
+        if user_id != cart_object.user_id:
+            self.exceptions.forbidden_error()
 
         if not cart_object:
             self.exceptions.not_exist_error("cart_object")
@@ -63,8 +65,10 @@ class CartObjectService:
         self.session.delete(cart_object)
         self.session.commit()
 
-    def update_cart_object(self, cart_object_new_data: CartObjectUpdate) -> Cart:
+    def update_cart_object(self, cart_object_new_data: CartObjectUpdate, user_id) -> Cart:
         cart_object = self.get_cart_object_by_id(cart_object_new_data.id)
+        if user_id != cart_object.user_id:
+            self.exceptions.forbidden_error()
 
         if not cart_object:
             self.exceptions.not_exist_error("cart_object")
