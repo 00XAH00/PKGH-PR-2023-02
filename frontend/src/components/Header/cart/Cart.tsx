@@ -34,7 +34,11 @@ const Cart: FC = () => {
                             </div>
                         </DrawerBody>
 
-                        <DrawerFooter justifyContent='space-between'>
+                        <DrawerFooter
+                            justifyContent='space-between'
+                            borderTopColor={'gray.300'}
+                            borderTopWidth={1}
+                        >
                                 <div className={styles.footer}>
                                     <div>Total price:</div>
                                     <div>$2000</div>

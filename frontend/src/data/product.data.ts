@@ -4,12 +4,11 @@ import {IProduct} from "../types/product.interface";
 export const products: IProduct[] = [
     {
         id: 1,
-        description: 'MacBook Pro с суперсилой M2 Pro работает без подзарядки весь день, имеет ' +
-                     'превосходный дисплей Liquid Retina XDR и все необходимые порты',
-        name: 'Apple MacBook Pro 16',
+        description: 'Волшебный способ взаимодействия с вашим Iphone. Революционные фунции безопасности,' +
+                     'разработанные для спасения жизней',
+        name: 'Apple iPhone 14 Pro',
         images:[
-            '/src/assets/productsImg/product-img1.png',
-            '/src/assets/productsImg/product-img2.png'
+            '/src/assets/productsImg/product-img4.png'
         ],
         price: 3500,
         reviews: []
@@ -60,6 +59,18 @@ export const products: IProduct[] = [
             '/src/assets/productsImg/product-img8.png'
         ],
         price: 200,
+        reviews: []
+    },
+    {
+        id: 6,
+        description: 'MacBook Pro с суперсилой M2 Pro работает без подзарядки весь день, имеет ' +
+            'превосходный дисплей Liquid Retina XDR и все необходимые порты',
+        name: 'Apple MacBook Pro 16',
+        images:[
+            '/src/assets/productsImg/product-img1.png',
+            '/src/assets/productsImg/product-img2.png'
+        ],
+        price: 3500,
         reviews: []
     },
 ]

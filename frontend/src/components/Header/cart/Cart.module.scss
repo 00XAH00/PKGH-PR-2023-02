@@ -14,7 +14,7 @@
 .cart{
 
   .item{
-    @apply mb-4 flex gap-5;
+    @apply mb-10 flex gap-8 items-center border-b border-b-['#f7f4f0'] pb-6 pt-4;
   }
   .name{
     @apply tracking-widest truncate font-semibold w-40 whitespace-pre-wrap;
@@ -27,7 +27,11 @@
 .headerCart{
   @apply flex justify-center
 }
-.cartImg{ width: 100px; }
+.cartImg{
+  width: 90px;
+  height: 120px;
+}
+
 
 .footer{
   >div:first-child{
