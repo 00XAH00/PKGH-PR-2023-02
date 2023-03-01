@@ -34,6 +34,16 @@ const CartActions: FC = () => {
                     <AddIcon width='8px'/>
                 </Button>
             </HStack>
+
+            <Button
+                variant='unstyled'
+                color='#f23c3d'
+                marginTop={2}
+                size='md'
+                opacity={0.8}
+            >
+                Delete
+            </Button>
         </div>
 
     )
