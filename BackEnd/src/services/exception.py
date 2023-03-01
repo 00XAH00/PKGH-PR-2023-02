@@ -29,7 +29,7 @@ class ExceptionService:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=error_details)
 
     @staticmethod
-    def not_exist_error(exception_block_error: str):
+    def not_exist_error(exception_block_error: str) -> None:
         error_details = "Информация не доступна"
         if exception_block_error == "user":
             error_details = "Пользователь не существует"
@@ -43,6 +43,6 @@ class ExceptionService:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=error_details)
 
     @staticmethod
-    def token_error():
+    def token_error() -> None:
         error_details = "Некорректный токен"
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=error_details)

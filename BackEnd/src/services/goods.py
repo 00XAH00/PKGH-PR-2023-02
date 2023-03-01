@@ -44,7 +44,7 @@ class ProductService:
 
         return product
 
-    def remove_product(self, product_code: str):
+    def remove_product(self, product_code: str) -> None:
         product = self.get_product_by_code(product_code)
         if not product:
             self.exceptions.not_exist_error("goods")
@@ -52,7 +52,7 @@ class ProductService:
         self.session.delete(product)
         self.session.commit()
 
-    def get_product_by_name(self, product_name: str):
+    def get_product_by_name(self, product_name: str) -> Product:
         product = (
             self.session.query(Product)
             .filter(Product.name == product_name)
@@ -61,7 +61,7 @@ class ProductService:
 
         return product
 
-    def get_product_by_code(self, product_code: str):
+    def get_product_by_code(self, product_code: str) -> Product:
         product = (
             self.session.query(Product)
             .filter(Product.code == product_code)
@@ -70,7 +70,7 @@ class ProductService:
 
         return product
 
-    def change_product_price(self, product_new_data: ProductChangePriceSchema):
+    def change_product_price(self, product_new_data: ProductChangePriceSchema) -> None:
         product = self.get_product_by_code(product_new_data.product_code)
         if not product:
             self.exceptions.not_exist_error("goods")

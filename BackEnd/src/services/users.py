@@ -90,7 +90,7 @@ class UserService:
     def validate_user_action(self, main_user_id: int, changeable_user_id: int) -> bool:
         return self.get_user_by_id(user_id=main_user_id).is_admin or (main_user_id == changeable_user_id)
 
-    def change_user_password(self, main_user_id: int, changeable_user_password: UserPasswordChangeSchema):
+    def change_user_password(self, main_user_id: int, changeable_user_password: UserPasswordChangeSchema) -> None:
         main_user = self.get_user_by_id(main_user_id)
         user = self.get_user_by_id(changeable_user_password.user_id)
         user_old_password: UserPassword = UserPassword(
