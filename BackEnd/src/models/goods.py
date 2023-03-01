@@ -14,5 +14,5 @@ class Product(Base):
     category = relationship('Category', backref='categories')
     manufacture_id = Column(Integer, ForeignKey('manufactures.id'), nullable=False)
     manufacture = relationship('Manufacture', backref='manufactures')
-    description = Column(String)
     is_available = Column(Boolean, nullable=False)
+    description = Column(String, nullable=False)
