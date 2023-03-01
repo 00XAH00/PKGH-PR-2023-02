@@ -49,8 +49,8 @@ def remove_product(product_code: str, product_service: ProductService = Depends(
     return product_service.remove_product(product_code)
 
 
-@router.put('/change_product_price', name="Изменение цены товара")
-def remove_product(product_price: ProductChangePriceSchema, product_service: ProductService = Depends(),
+@router.put('/change_product_price', name="Изменение цены товара", response_model=ProductResponse)
+def change_product_price(product_price: ProductChangePriceSchema, product_service: ProductService = Depends(),
                    user_service: UserService = Depends(), user_id: int = Depends(get_current_user_id),
                    exception_service: ExceptionService = Depends()
                    ):

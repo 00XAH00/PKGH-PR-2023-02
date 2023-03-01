@@ -72,10 +72,11 @@ class ProductService:
 
         return product
 
-    def change_product_price(self, product_new_data: ProductChangePriceSchema) -> None:
+    def change_product_price(self, product_new_data: ProductChangePriceSchema) -> Product:
         product = self.get_product_by_code(product_new_data.product_code)
         if not product:
             self.exceptions.not_exist_error("goods")
 
         product.price = product_new_data.new_price
         self.session.commit()
+        return product
