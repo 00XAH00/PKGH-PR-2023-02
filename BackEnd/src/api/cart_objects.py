@@ -25,8 +25,7 @@ def get_current_user_id(token: str = Depends(oauth2_schema), user_service: UserS
 @router.post('/create_cart_object', response_model=CartObjectResponse, name="Добавление товара в корзину",
              status_code=status.HTTP_201_CREATED)
 def create_cart_object(cart_object: CartObjectCreateSchema, cart_object_service: CartObjectService = Depends(),
-                       user_service: UserService = Depends(), user_id: int = Depends(get_current_user_id),
-                       exception_service: ExceptionService = Depends()):
+                       user_id: int = Depends(get_current_user_id)):
     """
         Добавление товара в корзину
     """
@@ -36,18 +35,16 @@ def create_cart_object(cart_object: CartObjectCreateSchema, cart_object_service:
 
 @router.delete('/remove_cart_object', name="Удаление товара из корзины", status_code=status.HTTP_204_NO_CONTENT)
 def remove_cart_object(cart_object_id: int, cart_object_service: CartObjectService = Depends(),
-                       user_service: UserService = Depends(), user_id: int = Depends(get_current_user_id),
-                       exception_service: ExceptionService = Depends()):
+                       user_id: int = Depends(get_current_user_id)):
     """
         Удаление товара из корзины
     """
 
-    return cart_object_service.remove_cart_object(cart_object_id)
+    return cart_object_service.remove_cart_object(cart_object_id, user_id)
 
 
 @router.post('/get_user_cart', name="Получение списка товаров пользователя", response_model=List[CartObjectResponse])
-def get_user_cart(cart_object_service: CartObjectService = Depends(), user_service: UserService = Depends(),
-                  user_id: int = Depends(get_current_user_id), exception_service: ExceptionService = Depends()):
+def get_user_cart(cart_object_service: CartObjectService = Depends(), user_id: int = Depends(get_current_user_id)):
     """
         Получение корзины пользователя
     """
@@ -58,10 +55,9 @@ def get_user_cart(cart_object_service: CartObjectService = Depends(), user_servi
 @router.put('/change_cart_object_data', name='Обновление данных товара в корзине пользователя',
             response_model=CartObjectResponse)
 def change_cart_object_data(cart_object_new_data: CartObjectUpdate, user_id: int = Depends(get_current_user_id),
-                            user_service: UserService = Depends(), exception_service: ExceptionService = Depends(),
                             cart_object_service: CartObjectService = Depends()):
     """
         Обновление данных товара в корзине пользователя
     """
 
-    return cart_object_service.update_cart_object(cart_object_new_data)
+    return cart_object_service.update_cart_object(cart_object_new_data, user_id)
