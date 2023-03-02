@@ -1,6 +1,7 @@
 version: "3.3"
 services:
   apple_devices_nginx:
+    container_name: apple_devices_web
     build:
       context: "."
       dockerfile: "nginx/Dockerfile"
@@ -10,6 +11,7 @@ services:
       -  ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ../backend/src/pictures:/var/www/AppleDevices.xahprod.ru/public/pictures
   apple_devices_api:
+    container_name: apple_devices_api
     build:
       context: "../"
       dockerfile: "Docker/backend/Dockerfile"
