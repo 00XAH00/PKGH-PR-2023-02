@@ -7,5 +7,6 @@ if __name__ == "__main__":
         host=settings.host,
         port=settings.port,
         root_path="./",
-        reload=True
+        reload=True,
+        proxy_headers=True
     )
