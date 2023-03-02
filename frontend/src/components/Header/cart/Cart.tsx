@@ -1,13 +1,16 @@
 import {FC, useRef, useState} from 'react';
-import { cart } from '../../../data/cart.data';
+// import { cart } from '../../../data/cart.data';
 import styles from './Cart.module.scss';
 import CartItem from './cart-item/CartItem';
 import {Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton} from "@chakra-ui/react";
 import {DrawerHeader, DrawerBody, DrawerFooter, Button} from "@chakra-ui/react";
+import {useTypedSelector} from "../../../hooks/useTypedSelector";
 
 const Cart: FC = () => {
     const [isOpen, setIsOpen] = useState(false)
     const btnRef = useRef<HTMLButtonElement>(null)
+
+    const cart = useTypedSelector(state => (state.cart.items))
 
     return(
         <div className={styles['wrapper-cart']}>

@@ -2,8 +2,11 @@ import {FC} from "react";
 import {Button, HStack, useNumberInput} from "@chakra-ui/react";
 import {Input} from "@chakra-ui/react";
 import {AddIcon, MinusIcon} from "@chakra-ui/icons";
+import {useActions} from "../../../../../hooks/useActions";
 
-const CartActions: FC = () => {
+import {ICartItem} from "../../../../../types/cart.interface";
+
+const CartActions: FC<{item: ICartItem}> = ({item}) => {
     const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
         useNumberInput({
             step: 1,
@@ -14,6 +17,8 @@ const CartActions: FC = () => {
     const inc = getIncrementButtonProps()
     const dec = getDecrementButtonProps()
     const input = getInputProps()
+
+    const {removeFromCart} = useActions()
 
     return(
         <div>
@@ -41,6 +46,7 @@ const CartActions: FC = () => {
                 marginTop={2}
                 size='md'
                 opacity={0.8}
+                onClick={() => removeFromCart({id: item.id})}
             >
                 Delete
             </Button>

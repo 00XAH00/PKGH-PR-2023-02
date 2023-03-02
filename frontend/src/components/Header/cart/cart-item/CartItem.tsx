@@ -21,7 +21,7 @@ const CartItem: FC<{item: ICartItem}> = ({item}) => {
                         style: 'currency', currency: 'USD'
                     }).format(item.product.price)}
                 </p>
-                <CartActions/>
+                <CartActions item={item}/>
             </div>
         </div>
     )
