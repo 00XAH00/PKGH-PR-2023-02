@@ -16,7 +16,7 @@ RUN poetry config virtualenvs.create false
 RUN poetry install --no-dev
 #
 COPY ../backend/ /app
-COPY ./backend/.env /app/.env
+COPY ./Docker/backend/.env /app/.env
 
 #
 CMD ["poetry", "run", "python3", "src/main.py"]
