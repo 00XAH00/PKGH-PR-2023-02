@@ -1,10 +1,12 @@
 import {FC} from "react";
+import {AddIcon, MinusIcon} from "@chakra-ui/icons";
 import {Button, HStack, useNumberInput} from "@chakra-ui/react";
 import {Input} from "@chakra-ui/react";
-import {AddIcon, MinusIcon} from "@chakra-ui/icons";
 import {useActions} from "../../../../../hooks/useActions";
 
+import {useCart} from "../../../../../hooks/useCart";
 import {ICartItem} from "../../../../../types/cart.interface";
+// import {useTypedSelector} from "../../../../../hooks/useTypedSelector";
 
 const CartActions: FC<{item: ICartItem}> = ({item}) => {
     const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
@@ -20,10 +22,18 @@ const CartActions: FC<{item: ICartItem}> = ({item}) => {
 
     const {removeFromCart, changeQuantity} = useActions()
 
+    const {cart} = useCart()
+
+    const quantity = cart.find(cartItem => cartItem.id === item.id)?.quantity
+
     return(
         <div>
             <HStack>
-                <Button {...dec} boxSize={10} onClick={() => changeQuantity({id: item.id, type: 'minus'})}>
+                <Button {...dec}
+                        boxSize={10}
+                        onClick={() => changeQuantity({id: item.id, type: 'minus'})}
+                        disabled={quantity === 1}
+                >
                     <MinusIcon width='8px'/>
                 </Button>
 
@@ -33,6 +43,7 @@ const CartActions: FC<{item: ICartItem}> = ({item}) => {
                        height='40px'
                        readOnly
                        _hover={{cursor: 'default'}}
+                       value={quantity}
                 />
 
                 <Button {...inc} boxSize={10} onClick={() => changeQuantity({id: item.id, type: 'plus'})}>
