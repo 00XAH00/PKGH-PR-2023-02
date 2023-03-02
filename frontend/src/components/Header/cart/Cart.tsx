@@ -15,7 +15,7 @@ const Cart: FC = () => {
     return(
         <div className={styles['wrapper-cart']}>
             <button className={styles.heading} onClick={ () => setIsOpen(!isOpen)} ref={btnRef}>
-                <span className={styles.badge}>A</span>
+                <span className={styles.badge}>{cart.length}</span>
                 <span className={styles.text}>Cart</span>
             </button>
 
