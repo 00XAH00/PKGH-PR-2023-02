@@ -1,5 +1,5 @@
 **/.DS_Store
 **/.idea
 **/.env
-BackEnd/src/pictures
+backend/src/pictures
 /frontend/node_modules/
