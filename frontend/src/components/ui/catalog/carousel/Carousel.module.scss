@@ -27,4 +27,9 @@
       @apply text-white text-2xl leading-9
     }
   }
+  .addBtn{
+    @apply text-violet-500 tracking-widest bg-gray-200 p-2 px-4 mt-10 font-normal uppercase;
+    font-size: 12px;
+    border-radius: 15px;
+  }
 }
