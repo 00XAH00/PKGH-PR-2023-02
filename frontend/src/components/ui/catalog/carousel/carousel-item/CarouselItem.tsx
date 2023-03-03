@@ -20,26 +20,27 @@ const CarouselItem: FC<ICarouselItem> = ({product,isActive, selectItem}) => {
         })}
              onClick={selectItem}
         >
-
             <div>
-                <img
-                    className={styles.image}
-                    alt={product.name}
-                    src={product.images[0]}
+                <div>
+                    <img
+                        className={styles.image}
+                        alt={product.name}
+                        src={product.images[0]}
 
-                />
+                    />
 
-                <div className={styles.heading}>
-                    {product.name}
-                </div>
+                    <div className={styles.heading}>
+                        {product.name}
+                    </div>
 
-                {isActive ?
+                    {isActive ?
                         <div>
                             <CarouselButton product={product}/>
                         </div>
-                    : (
-                    <div className={styles.description}>{product.description}</div>
-                )}
+                        : (
+                            <div className={styles.description}>{product.description}</div>
+                        )}
+                </div>
             </div>
         </button>
     )

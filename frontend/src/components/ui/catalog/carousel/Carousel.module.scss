@@ -22,6 +22,7 @@
   &.active{
     @apply shadow-xl shadow-violet-400 bg-violet-300 p-7 pt-0;
     transform: scale(1.15);
+    transition: all .4s;
 
     .heading{
       @apply text-white text-2xl leading-9
