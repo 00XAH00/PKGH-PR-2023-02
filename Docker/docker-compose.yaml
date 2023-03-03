@@ -10,8 +10,15 @@ services:
     volumes:
       -  ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ../backend/src/pictures:/var/www/AppleDevices.xahprod.ru/public/pictures
+
   apple_devices_api:
     container_name: apple_devices_api
     build:
       context: "../"
       dockerfile: "Docker/backend/Dockerfile"
+
+  apple_devices_ui:
+    container_name: apple_devices_ui
+    build:
+      context: "../"
+      dockerfile: "Docker/frontend/Dockerfile"
