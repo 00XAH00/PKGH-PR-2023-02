@@ -1,3 +1,30 @@
-.item{
+.content{
+  @apply max-w-7xl mx-auto
+}
+.carousel{
+  @apply grid grid-cols-4 gap-8 mt-32
+}
 
+.item{
+  @apply rounded-3xl bg-gray-300 p-5 pt-0 mb-16;
+
+  .image{
+    @apply -mt-14  w-28 h-36 mx-auto;
+  }
+  .heading{
+    @apply mt-3 text-lg font-bold text-gray-400 leading-7 overflow-hidden truncate;
+    max-height: 2.4rem;
+  }
+  .description{
+    @apply text-sm mt-5 text-gray-400 opacity-90;
+  }
+
+  &.active{
+    @apply shadow-xl shadow-violet-400 bg-violet-300 p-7 pt-0;
+    transform: scale(1.15);
+
+    .heading{
+      @apply text-white text-2xl leading-9
+    }
+  }
 }

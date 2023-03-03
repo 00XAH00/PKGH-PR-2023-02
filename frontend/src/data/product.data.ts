@@ -63,14 +63,13 @@ export const products: IProduct[] = [
     },
     {
         id: 6,
-        description: 'MacBook Pro с суперсилой M2 Pro работает без подзарядки весь день, имеет ' +
-            'превосходный дисплей Liquid Retina XDR и все необходимые порты',
-        name: 'Apple MacBook Pro 16',
+        description: 'Безкомпромиссные возможности в прочном корпусе. Непревзойденная точность' +
+            'GPS даже в мегаполисе',
+        name: 'Apple Watch Ultra GPS + Cellular',
         images:[
-            '/src/assets/productsImg/product-img1.png',
-            '/src/assets/productsImg/product-img2.png'
+            '/src/assets/productsImg/product-img6.png'
         ],
-        price: 3500,
+        price: 1000,
         reviews: []
     },
 ]
